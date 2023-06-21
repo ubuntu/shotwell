@@ -1,0 +1,22 @@
+name: Build Snap
+on:
+  workflow_call:
+  workflow_dispatch:
+  push:
+    branches:
+      - latest
+
+jobs:
+  build:
+    name: Build Snap
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v3
+      - uses: snapcore/action-build@v1
+        id: build
+      - name: Upload locally built Snap artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: snap-artifact
+          path: ${{ steps.build.outputs.snap }}

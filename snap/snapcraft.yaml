@@ -1,0 +1,52 @@
+name: shotwell
+version: '0.32.1'
+summary: Open source photo manager for GNOME
+description: |
+  Shotwell is an open source photo manager for GNOME. It allows you to import,
+  organize, edit, and share your photos.
+
+grade: stable
+confinement: strict
+
+base: core22
+adopt-info: shotwell
+
+apps:
+  shotwell:
+    command: usr/local/bin/shotwell
+    extensions: [gnome]
+    desktop: usr/local/share/applications/org.gnome.Shotwell.desktop
+    environment:
+      LD_LIBRARY_PATH: "$SNAP/usr/local/lib/x86_64-linux-gnu:\
+        $SNAP/usr/lib/x86_64-linux-gnu"
+
+parts:
+  shotwell:
+    plugin: meson
+    source: https://gitlab.gnome.org/GNOME/shotwell.git
+    source-tag: shotwell-$SNAPCRAFT_PROJECT_VERSION
+    build-packages:
+      - cmake
+      - libgstreamer1.0-dev
+      - libgstreamer-plugins-base1.0-dev
+      - libgphoto2-dev
+      - libgexiv2-dev
+      - libraw-dev
+    override-build: |
+      DESKTOP=$CRAFT_PART_INSTALL/usr/local/share/applications/org.gnome.Shotwell.desktop
+      EXEC=/snap/shotwell/current/usr/local/bin/shotwell
+      craftctl default
+      sed -i "s:Exec=shotwell:Exec=$EXEC:g" $DESKTOP
+    stage-packages:
+      - libexif12
+      - libgcr-ui-3-1
+      - libgdata22
+      - libgexiv2-2
+      - libgphoto2-6
+      - libgphoto2-port12
+      - libgstreamer-plugins-base1.0-0
+      - libgudev-1.0-0
+      - libraw20
+      - shotwell-common
+      - dconf-cli
+      - default-dbus-session-bus
