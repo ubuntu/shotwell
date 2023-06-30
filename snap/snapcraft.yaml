@@ -6,7 +6,7 @@ base: core22
 
 slots:
   # for GtkApplication registration
-  drawing:
+  shotwell:
     interface: dbus
     bus: session
     name: org.gnome.Shotwell
