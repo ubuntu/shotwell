@@ -31,7 +31,7 @@ parts:
     source-tag: shotwell-0.32.1
     meson-parameters:
       - --prefix=/usr
-    parse-info: [ usr/share/metainfo/org.gnome.Shotwell.appdata.xml ]
+    parse-info: [usr/share/metainfo/org.gnome.Shotwell.appdata.xml]
     build-packages:
       - cmake
       - libgstreamer1.0-dev
@@ -54,7 +54,8 @@ parts:
     override-prime: |
       set -eux
       for snap in "core22" "gtk-common-themes"; do
-        cd "/snap/$snap/current" && find . -type f,l -name *.so.* -exec rm -f "$CRAFT_PRIME/{}" \;
+        cd "/snap/$snap/current" && find . -type f,l -name *.so.* \
+          -exec rm -f "$CRAFT_PRIME/{}" \;
       done
       for snap in "core22"; do
         cd "/snap/$snap/current/usr/lib"
