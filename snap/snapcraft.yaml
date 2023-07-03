@@ -47,3 +47,22 @@ parts:
       - libgphoto2-6
       - libgphoto2-port12
       - libraw20
+  cleanup:
+    after: [shotwell]
+    plugin: nil
+    build-snaps: [core22, gtk-common-themes]
+    override-prime: |
+      set -eux
+      for snap in "core22" "gtk-common-themes"; do
+        cd "/snap/$snap/current" && find . -type f,l -name *.so.* -exec rm -f "$CRAFT_PRIME/{}" \;
+      done
+      for snap in "core22"; do
+        cd "/snap/$snap/current/usr/lib"
+        for filename in [ *.so* ]; do
+          rm -f "$CRAFT_PRIME/usr/lib/$CRAFT_ARCH_TRIPLET/$filename"
+        done
+        cd "/snap/$snap/current/usr/lib/$CRAFT_ARCH_TRIPLET"
+        for filename in [ *.so* ]; do
+          rm -f "$CRAFT_PRIME/usr/lib/$filename"
+        done
+      done
