@@ -9,8 +9,11 @@ def test_install():
         snapcraft = yaml.safe_load(file)
 
         subprocess.run(
-            f"sudo snap install ./{snapcraft['name']}_{snapcraft['version']}_amd64.snap --devmode".split(),
+            f"sudo snap install ./{snapcraft['name']}_*_amd64.snap --devmode",
             check=True,
+            shell=True,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
         )
 
 
@@ -21,13 +24,17 @@ def test_all_apps():
 
         override = {}
 
-        skip = ["shotwell"]
+        skip = []
 
         for app, data in snapcraft["apps"].items():
             if not bool(data.get("daemon")) and app not in skip:
-                print(f"Testing {snapcraft['name']}.{app}....")
+                command = (
+                    app if snapcraft["name"] == app else f"{snapcraft['name']}.{app}"
+                )
+
+                print(f"Testing {command}....")
                 subprocess.run(
-                    f"{snapcraft['name']}.{app} {override.get(app, '--help')}".split(),
+                    f"{command} {override.get(app, '--help')}".split(),
                     check=True,
                 )
 
