@@ -28,9 +28,12 @@ parts:
   shotwell:
     plugin: meson
     source: https://gitlab.gnome.org/GNOME/shotwell.git
-    source-tag: shotwell-0.32.1
+    source-tag: shotwell-0.32.2
     meson-parameters:
       - --prefix=/usr
+      - -Dunity_support=true
+    build-environment:
+      - LD_LIBRARY_PATH: ${LD_LIBRARY_PATH:+$LD_LIBRARY_PATH:}/snap/gnome-42-2204-sdk/current/usr/lib/$CRAFT_ARCH_TRIPLET/libunity
     parse-info: [usr/share/metainfo/org.gnome.Shotwell.appdata.xml]
     build-packages:
       - cmake
@@ -47,6 +50,7 @@ parts:
       - libgphoto2-6
       - libgphoto2-port12
       - libraw20
+
   cleanup:
     after: [shotwell]
     plugin: nil
