@@ -23,6 +23,7 @@ apps:
       - home
       - mount-observe
       - hardware-observe
+      - removable-media
 
 parts:
   shotwell:
