@@ -27,9 +27,13 @@ apps:
 
 parts:
   shotwell:
+# ext:updatesnap
+#   version-format:
+#     format: "shotwell-%M.%m.%R"
     plugin: meson
     source: https://gitlab.gnome.org/GNOME/shotwell.git
     source-tag: shotwell-0.32.2
+    source-depth: 1
     meson-parameters:
       - --prefix=/usr
       - -Dunity_support=true
