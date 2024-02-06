@@ -21,6 +21,7 @@ apps:
     plugs:
       - audio-playback
       - home
+      - raw-usb
       - mount-observe
       - hardware-observe
       - removable-media
@@ -47,6 +48,7 @@ parts:
       - libgphoto2-dev
       - libgexiv2-dev
       - libraw-dev
+      - libmtp-dev
     stage-packages:
       - libexif12
       - libgcr-ui-3-1
@@ -55,6 +57,7 @@ parts:
       - libgphoto2-6
       - libgphoto2-port12
       - libraw20
+      - libmtp9
 
   cleanup:
     after: [shotwell]
