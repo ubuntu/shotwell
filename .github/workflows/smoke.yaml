@@ -18,10 +18,10 @@ jobs:
     timeout-minutes: 5
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Install tox
         run: python3 -m pip install tox
-      - uses: actions/download-artifact@v3
+      - uses: actions/download-artifact@v4
         with:
           name: snap-artifact
       - name: Smoke Tests
