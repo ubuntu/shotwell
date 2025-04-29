@@ -1,0 +1,5 @@
+#!/bin/sh
+
+export LD_LIBRARY_PATH=${LD_LIBRARY_PATH:+$LD_LIBRARY_PATH:}$SNAP/usr/lib/${SNAP_LAUNCHER_ARCH_TRIPLET}/lapack:$SNAP/usr/lib/${SNAP_LAUNCHER_ARCH_TRIPLET}/blas
+
+exec "$@"

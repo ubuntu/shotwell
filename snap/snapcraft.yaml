@@ -11,9 +11,15 @@ slots:
     bus: session
     name: org.gnome.Shotwell
 
+layout:
+  /usr/libexec:
+    bind: $SNAP/usr/libexec
+  /usr/share/shotwell:
+    bind: $SNAP/usr/share/shotwell
+
 apps:
   shotwell:
-    command: usr/bin/shotwell
+    command: launch.sh $SNAP/usr/bin/shotwell
     extensions: [gnome]
     desktop: usr/share/applications/org.gnome.Shotwell.desktop
     environment:
@@ -27,6 +33,10 @@ apps:
       - removable-media
 
 parts:
+  scripts:
+    plugin: dump
+    source: ./scripts
+
   shotwell:
 # ext:updatesnap
 #   version-format:
@@ -38,6 +48,7 @@ parts:
     meson-parameters:
       - --prefix=/usr
       - -Dunity_support=true
+      - -Dface_detection=true
     build-environment:
       - LD_LIBRARY_PATH: "${LD_LIBRARY_PATH:+$LD_LIBRARY_PATH:}\
                           /snap/gnome-46-2404-sdk/current/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/libunity"
@@ -50,6 +61,7 @@ parts:
       - libgexiv2-dev
       - libraw-dev
       - libmtp-dev
+      - libopencv-dev
     stage-packages:
       - libexif12
       - libgcr-ui-3-1
@@ -59,6 +71,59 @@ parts:
       - libgphoto2-port12t64
       - libraw23t64
       - libmtp9t64
+      - libopencv-core406t64
+      - libxerces-c3.2t64
+      - liburiparser1
+      - libsz2
+      - libarmadillo12
+      - libopenexr-3-1-30
+      - libpq5
+      - libprotobuf32t64
+      - libqhull-r8.0
+      - libsnappy1v5
+      - libblosc1
+      - libcfitsio10t64
+      - libcharls2
+      - libhdf4-0-alt
+      - libfreexl1
+      - libfyba0t64
+      - libfyba0t64
+      - libfyba0t64
+      - libgdal34t64
+      - libgdcm3.0t64
+      - libgdcm3.0t64
+      - libgdcm3.0t64
+      - libgdcm3.0t64
+      - libgdcm3.0t64
+      - libgdcm3.0t64
+      - libgdcm3.0t64
+      - libgdcm3.0t64
+      - libgeos3.12.1t64
+      - libgeos-c1t64
+      - libgeotiff5
+      - libgif7
+      - libhdf5-103-1t64
+      - libhdf5-hl-100t64
+      - libkmlbase1t64
+      - libkmldom1t64
+      - libkmlengine1t64
+      - libhdf4-0-alt
+      - libminizip1t64
+      - libmysqlclient21
+      - libnetcdf19t64
+      - libodbc2
+      - libodbcinst2
+      - libogdi4.1
+      - libopencv-calib3d406t64
+      - libopencv-dnn406t64
+      - libopencv-features2d406t64
+      - libopencv-flann406t64
+      - libopencv-imgcodecs406t64
+      - libopencv-imgproc406t64
+      - libopencv-objdetect406t64
+      - libproj25
+      - librttopo1
+      - libspatialite8t64
 
   cleanup:
     after: [shotwell]
@@ -66,11 +131,11 @@ parts:
     build-snaps: [core24, gtk-common-themes]
     override-prime: |
       set -eux
-      for snap in "core24" "gtk-common-themes"; do
+      for snap in "core24" "gtk-common-themes" "gnome-46-2404"; do
         cd "/snap/$snap/current" && find . -type f,l -name *.so.* \
           -exec rm -f "$CRAFT_PRIME/{}" \;
       done
-      for snap in "core24"; do
+      for snap in "core24" "gnome-46-2404"; do
         cd "/snap/$snap/current/usr/lib"
         for filename in [ *.so* ]; do
           rm -f "$CRAFT_PRIME/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/$filename"
