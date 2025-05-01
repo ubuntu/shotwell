@@ -53,6 +53,9 @@ parts:
       - LD_LIBRARY_PATH: "${LD_LIBRARY_PATH:+$LD_LIBRARY_PATH:}\
                           /snap/gnome-46-2404-sdk/current/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/libunity"
     parse-info: [usr/share/metainfo/org.gnome.Shotwell.appdata.xml]
+    override-pull: |
+      craftctl default
+      patch -p1 < $CRAFT_PROJECT_DIR/patches/0.32.10.patch
     build-packages:
       - cmake
       - libgstreamer1.0-dev
