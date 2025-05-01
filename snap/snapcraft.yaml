@@ -56,6 +56,7 @@ parts:
     override-pull: |
       craftctl default
       patch -p1 < $CRAFT_PROJECT_DIR/patches/0.32.10.patch
+      patch -p1 < $CRAFT_PROJECT_DIR/patches/0.32.10b.patch
     build-packages:
       - cmake
       - libgstreamer1.0-dev
