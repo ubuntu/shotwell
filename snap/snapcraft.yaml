@@ -37,7 +37,13 @@ apps:
     desktop: usr/share/applications/org.gnome.Shotwell-Viewer.desktop
     environment:
       HOME: $SNAP_USER_COMMON
-    plugs: *pluglist
+    plugs:
+      - audio-playback
+      - home
+      - raw-usb
+      - mount-observe
+      - hardware-observe
+      - removable-media
 
 parts:
   scripts:
