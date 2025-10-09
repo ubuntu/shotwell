@@ -24,7 +24,7 @@ apps:
     desktop: usr/share/applications/org.gnome.Shotwell.desktop
     environment:
       HOME: $SNAP_USER_COMMON
-    plugs:
+    plugs: &pluglist
       - audio-playback
       - home
       - raw-usb
