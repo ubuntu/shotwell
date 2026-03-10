@@ -50,7 +50,7 @@ parts:
 #     format: "shotwell-%M.%m.%R"
     plugin: meson
     source: https://gitlab.gnome.org/GNOME/shotwell.git
-    source-tag: 'shotwell-0.32.13'
+    source-tag: 'shotwell-0.32.15'
     source-depth: 1
     meson-parameters:
       - --prefix=/usr
